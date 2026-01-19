@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Iniciar / Crear Cuenta - Fake Shop</title>
+    <link rel="stylesheet" href="../css/main.css">
+    <link rel="stylesheet" href="../css/login.css">
+</head>
+<body>
+
+<header>
+    <img src="imagenes/logo.jpg" alt="Logo Fake Shop" style="height:48px;vertical-align:middle;">
+    <a href="FakeShop.html" style="margin-left:12px;text-decoration:none;color:#333;">Volver a Inicio</a>
+</header>
+
+<main class="container">
+    <section class="auth-container">
+        <div class="auth-card" id="create-card">
+            <h2>Crear Cuenta</h2>
+            <p class="muted">Crea una cuenta para guardar pedidos y seguir tu historial.</p>
+
+
+            <form id="register-form" action="backend/registro.php" method="POST">
+                <div class="form-group">
+                    <label for="reg-name">Nombre completo</label>
+                    <input id="reg-name" name="nombre" type="text" required>
+                </div>
+        <div class="form-group">
+            <label for="reg-email">Correo electrónico</label>
+            <input id="reg-email" name="email" type="email" required>
+        </div>
+        <div class="form-group">
+            <label for="reg-password">Contraseña</label>
+            <input id="reg-password" name="contrasenia" type="password" required>
+        </div>
+        <button type="submit" class="btn">Crear cuenta</button>
+    </form>
+
+
+        <div class="auth-card" id="login-card">
+            <h2>Iniciar Sesión</h2>
+            <p class="muted">Accede con tu correo y contraseña.</p>
+            <form id="login-form" action="backend/buscarCuenta.php" method="POST">
+                <div class="form-group">
+                    <label for="login-email">Correo electrónico</label>
+                    <input id="login-email" name="email_iniciar" type="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Contraseña</label>
+                    <input id="login-password" name="contrasenia_iniciar" type="password" required>
+                </div>
+                <button type="submit" class="btn">Iniciar</button>
+            </form>
+        </div>
+    </section>
+</main>
+
+</body>
+</html>

@@ -1,0 +1,11 @@
+
+        .auth-container { max-width:900px;margin:40px auto;padding:20px;display:flex;gap:24px;flex-wrap:wrap; }
+        .auth-card { flex:1 1 380px;padding:20px;border-radius:8px;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.08); }
+        .auth-card h2 { margin-top:0; }
+        .form-group { margin-bottom:12px; display:flex;flex-direction:column; }
+        .form-group input[type="text"],
+        .form-group input[type="email"],
+        .form-group input[type="password"] { padding:8px;border:1px solid #ccc;border-radius:4px; }
+        .btn { display:inline-block;padding:10px 16px;border-radius:6px;background:#2b7cff;color:#fff;text-decoration:none;border:none;cursor:pointer; }
+        .muted { color:#666;font-size:0.9rem; }
+        @media(max-width:640px){ .auth-container{padding:12px} }

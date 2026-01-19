@@ -1,0 +1,199 @@
+/* Estilos específicos para el Panel de Administración */
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.card {
+    background-color: #f8f8ff; /* Blanco azulado, similar al product-card */
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border-left: 5px solid #8a2be2; /* Morado de la navegación */
+}
+
+.card h2 {
+    color: #6a0dad; /* Morado oscuro del h2 */
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+}
+
+.card .big-number {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #ff69b4; /* Rosa del botón de personalización */
+    margin: 0.2rem 0 0.5rem 0;
+}
+
+.card.full-width {
+    grid-column: 1 / -1; /* Ocupa todo el ancho en el grid */
+    border-left: 5px solid #5bc0de; /* Azul claro del botón de cargar más */
+}
+
+/* Estilos de tabla para Pedidos */
+.table-responsive {
+    overflow-x: auto;
+}
+
+#orders table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+    background-color: white;
+}
+
+#orders th, #orders td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+#orders th {
+    background-color: #8a2be2; /* Morado */
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+}
+
+#orders tbody tr:hover {
+    background-color: #f0f0f5;
+}
+
+#orders a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.status {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 0.8rem;
+}
+
+.status.pending {
+    background-color: #ffc107; /* Amarillo */
+    color: #333;
+}
+
+.status.sent {
+    background-color: #5bc0de; /* Azul claro */
+    color: white;
+}
+
+.status.completed {
+    background-color: #28a745; /* Verde */
+    color: white;
+}
+
+/* Estilos para Solicitudes de Personalización */
+#custom-requests ul {
+    list-style: none;
+    padding: 0;
+}
+#custom-requests li {
+    padding: 10px;
+    border-bottom: 1px dashed #ddd;
+    margin-bottom: 10px;
+}
+#custom-requests li:last-child {
+    border-bottom: none;
+}
+
+/* --- Nuevos estilos para Gestión de Productos (#products-manage) --- */
+
+#product-stock-table .stock-value {
+    font-weight: bold;
+    color: #007bff; /* Azul */
+}
+
+.stock-btn {
+    background-color: #8a2be2; /* Morado base */
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    margin: 0 2px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 30px; 
+    height: 30px;
+    line-height: 1;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 0.2s;
+}
+
+.stock-btn:hover {
+    background-color: #6a0dad;
+}
+
+.stock-btn.decrease-stock {
+    background-color: #dc3545; /* Rojo para disminuir */
+}
+
+.stock-btn.decrease-stock:hover {
+    background-color: #c82333;
+}
+
+.stock-btn.increase-stock {
+    background-color: #28a745; /* Verde para aumentar */
+}
+
+.stock-btn.increase-stock:hover {
+    background-color: #1e7e34;
+}
+
+/* Estilos para el formulario de Agregar Nuevo Producto */
+.product-form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+    padding: 1.5rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f8f8ff;
+    margin-top: 1rem;
+}
+
+.product-form-grid .form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.product-form-grid .form-group.full-row {
+    grid-column: 1 / -1; /* Ocupa todo el ancho */
+}
+
+.product-form-grid input[type="text"],
+.product-form-grid input[type="number"],
+.product-form-grid textarea {
+    padding: 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 0.5rem;
+}
+
+#btn-add-product {
+    background-color: #ff69b4; /* Rosa del custom form */
+    color: white;
+    border: none;
+    padding: 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    width: 100%;
+    transition: background-color 0.2s;
+}
+
+#btn-add-product:hover {
+    background-color: #ffb6c1;
+}
