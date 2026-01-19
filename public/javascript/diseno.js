@@ -66,8 +66,8 @@ function prepararCompra(productId) {
  * Modificación de addToCart con TALLA y LÍMITE DE 10
  */
 function addToCart(productId, talla) {
-    const productToAdd = allProducts.find(p => p.id === productId);
-    const existingItem = cart.find(item => item.id === productId && item.talla === talla);
+    const productToAdd = allProducts.find(p => p.id_producto === productId);
+    const existingItem = cart.find(item => item.id_producto === productId && item.talla === talla);
 
     if (existingItem) {
         if (existingItem.quantity < 10) {
@@ -79,7 +79,7 @@ function addToCart(productId, talla) {
     } else {
         cart.push({ ...productToAdd, quantity: 1, talla: talla });
     }
-    alert(`${productToAdd.name} (Talla ${talla}) agregado al carrito.`);
+    alert(`${productToAdd.nombre} (Talla ${talla}) agregado al carrito.`);
     renderCart();
 }
 
@@ -140,7 +140,7 @@ async function enviarSolicitud(e) {
     personalizedBtn.disabled = true;
 
     try {
-        const response = await fetch('backend/guardarSolicitud.php', {
+        const response = await fetch('http://localhost:3000/api/custom-requests', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(requestData)
@@ -177,7 +177,7 @@ async function fetchProducts(){
 }
 
 function removeFromCart(productId) {
-    cart = cart.filter(item => item.id !== productId);
+    cart = cart.filter(item => item.id_producto !== productId);
     renderCart();
 }
 
@@ -210,16 +210,16 @@ function renderCart() {
         const itemDiv = document.createElement('div');
         itemDiv.className = 'cart-item';
         itemDiv.innerHTML = `
-            <span>${item.name}</span>
+            <span>${item.nombre}</span>
             <div class="cart-quantity">
-                <button onclick="decreaseQuantity(${item.id})">-</button>
+                <button onclick="decreaseQuantity(${item.id_producto})">-</button>
                 <span>${item.quantity}</span>
-                <button onclick="increaseQuantity(${item.id})">+</button>
+                <button onclick="increaseQuantity(${item.id_producto})">+</button>
             </div>
-            <span>$${(item.price * item.quantity).toFixed(2)} MXN</span>
+            <span>$${(item.precio_unitario * item.quantity).toFixed(2)} MXN</span>
         `;
         cartItemsDiv.appendChild(itemDiv);
-        subtotal += item.price * item.quantity;
+        subtotal += item.precio_unitario * item.quantity;
     });
 
     // si no hay productos no hay envio
@@ -240,7 +240,7 @@ function renderCart() {
 
 //suma en el carrtio si se agrega un nuevo
 function increaseQuantity(productId) {
-    const item = cart.find(arrayProduct => arrayProduct.id === productId);
+    const item = cart.find(arrayProduct => arrayProduct.id_producto === productId);
     if (item) {
         item.quantity++;
         renderCart();
@@ -249,7 +249,7 @@ function increaseQuantity(productId) {
 
 //disminuye o quita del carrito
 function decreaseQuantity(productId) {
-    const item = cart.find(arrayProduct => arrayProduct.id === productId);
+    const item = cart.find(arrayProduct => arrayProduct.id_producto === productId);
     //si es true solo le resta
     if (item && item.quantity > 1) {
         item.quantity--;

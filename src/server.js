@@ -6,6 +6,15 @@ const PORT = 3000;
 const productsRoutes = require('./routes/products');
 app.use('/api/products', productsRoutes);
 
+//route to handle custom requests
+
+const customRequestRoutes = require('./routes/customRequest');
+app.use('/api/custom-requests', customRequestRoutes);
+
+// route to create users
+const userRoutes = require('./routes/createNewUser');
+app.use('/api/createUser', userRoutes);
+
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
