@@ -1,16 +1,9 @@
 const express = require('express');
 const router = express.Router();
-const productModel = require('../models/product.model');
+const productController = require('../controllers/products.controller');
 //the router to get all products,in server .js we use this router
-router.get('/', async (req, res) => {
-  try 
-  {
-    const result = await productModel.getAllProducts();
-    res.json(result);
-  } catch (error) 
-  {
-    res.status(500).json({ error: error.message });
-  }
-});
+//now we using controller to do the lofic part there and here just call the controller function
+
+router.get('/',productController.getProducts);
 
 module.exports = router;

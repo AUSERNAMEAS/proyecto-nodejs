@@ -6,7 +6,7 @@ const session = require('express-session'); //importing express-session to simul
 
 app.use(express.json()); // this uses middleware to parse JSON bodies
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'secretooo',
+  secret: process.env.SESSION_SECRET || 'secretoo',// secret key for signing the session ID cookie,
   resave: false,
   saveUninitialized: false,
   cookie: { secure: false }

@@ -118,18 +118,15 @@ if (dropZone) {
 
 async function enviarSolicitud(e) {
     e.preventDefault();
-
+    //here we get all the data from the form like usual lol
     const personalizedBtn = document.getElementById("btn-personalized");
     const productType = document.getElementById('product-type').value;
     const customImageInput = document.getElementById('custom-image');
     const instructions = document.getElementById('instructions').value;
 
     const imageFileName = customImageInput.files.length > 0 ? customImageInput.files[0].name : '';
-    if (!productType || !customImageInput.files.length) {
-        alert('Por favor, ingresa el tipo de producto y sube una imagen.');
-        return;
-    }
-
+    
+    //here we form an bject to send it as json
     const requestData = {
         productType: productType,
         instructions: instructions,
@@ -147,19 +144,21 @@ async function enviarSolicitud(e) {
         });
 
         const result = await response.json();
-
-        if (result.success) {
+        //if the response is success we will clear the fields
+        if (result.success) 
+        {
             alert(result.message);
             document.getElementById('product-type').value = '';
             document.getElementById('instructions').value = '';
             customImageInput.value = null;
-        } else {
-            alert(`Error al enviar la solicitud: ${result.message}`);
         }
-
-    } catch (error) {
+        }  
+    catch (error) 
+    {
         alert('Error de conexión al servidor al intentar enviar la solicitud.');
-    } finally {
+    } 
+    finally 
+    {
         personalizedBtn.textContent = 'Enviar Solicitud de Personalización';
         personalizedBtn.disabled = false;
     }
