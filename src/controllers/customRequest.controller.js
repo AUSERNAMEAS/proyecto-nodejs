@@ -18,9 +18,7 @@ console.log('imageFileName:', imageFileName);
     }
     await customRequest.createRequest(productType, instructions, imageFileName);
 
-    res.json({ success: true, message: 'Solicitud enviada correctamente.¡Pronto te contactaremos!' });
-
-  } 
+    res.json({ success: true, message: 'Solicitud enviada correctamente.¡Pronto te contactaremos!' });  } 
   catch (error) 
   {
     res.status(500).json({ success: false, message: error.message });

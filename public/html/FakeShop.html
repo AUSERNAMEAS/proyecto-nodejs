@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-&lt;?php
-session_start();
-//fakeShop.php
-// Inicia la sesión para verificar si el usuario ha iniciado sesión,osea que muestre el nombre oo correo
-?&gt;
 <html lang="es">
 <head>
     <meta charset="UTF-8">
@@ -16,14 +11,8 @@ session_start();
 
     <header>
     <img src="/img/logo/logo.jpg" alt="Logo Fake Shop" style="height:48px;vertical-align:middle;">
-
-    &lt;?php if (isset($_SESSION['usuario'])): ?&gt; 
-        <span style="margin-left:20px;">👋 Hola, &lt;?php echo $_SESSION['usuario']; ?&gt;</span>
-        <a href="backend/cerrarSesion.php" style="margin-left:12px;">Cerrar sesión</a>
-    &lt;?php else: ?&gt;
-        <a href="login.html" style="margin-left:12px;">Iniciar sesión</a>
-    &lt;?php endif; ?&gt; 25
-</header>
+    <div class="userSession" style="margin-left:20px;"></div>
+   </header>
 
 
     <nav>

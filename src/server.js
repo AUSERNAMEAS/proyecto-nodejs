@@ -19,6 +19,10 @@ app.use('/api/createUser', userRoutes);
 const sessionTestRoutes = require('./routes/sessionTest');
 app.use('/api/session', sessionTestRoutes);
 
+//main page route
+const mainPageRoutes = require('./routes/mainPage');
+app.use('/api/main-page', mainPageRoutes);
+
 
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);

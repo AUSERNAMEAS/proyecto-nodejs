@@ -190,7 +190,7 @@ loadMoreBtn.addEventListener('click', () => {
 });
 
 function renderCart() {
-    //si el carrito esta vacio muestra eso
+    // if the cart is empty itll show a message
     if (cart.length === 0) {
         cartItemsDiv.innerHTML = '<p>Tu carrito está vacío.</p>';
         cartSubtotalSpan.textContent = '$0.00 MXN';
@@ -204,7 +204,7 @@ function renderCart() {
 
     let subtotal = 0;
     cartItemsDiv.innerHTML = '';
-    //hara un nuevvo div y se renombra cartitem por cada elemento,
+    //itll make a new div for each element in the cart,
     cart.forEach(item => {
         const itemDiv = document.createElement('div');
         itemDiv.className = 'cart-item';
@@ -221,7 +221,7 @@ function renderCart() {
         subtotal += item.precio_unitario * item.quantity;
     });
 
-    // si no hay productos no hay envio
+    // if theres no product in the cart shipping is 0
     let shipping;
     if(subtotal>0){
         shipping= 80;
@@ -237,7 +237,7 @@ function renderCart() {
     cartTotalSpan.textContent = `$${total.toFixed(2)} MXN`;
 }
 
-//suma en el carrtio si se agrega un nuevo
+//add an item to the cart if it already exists just increases the quantity
 function increaseQuantity(productId) {
     const item = cart.find(arrayProduct => arrayProduct.id_producto === productId);
     if (item) {
@@ -246,7 +246,7 @@ function increaseQuantity(productId) {
     }
 }
 
-//disminuye o quita del carrito
+//remove an item from the cart if quantity is 1 else just decreases the quantity
 function decreaseQuantity(productId) {
     const item = cart.find(arrayProduct => arrayProduct.id_producto === productId);
     //si es true solo le resta
@@ -258,6 +258,27 @@ function decreaseQuantity(productId) {
         //si es true lo quit
     else if (item && item.quantity === 1) {
         removeFromCart(productId);
+    }
+}
+//very
+async function verifyUserSession() {
+    // we select the span where we will show the user session info and 
+    // we make a fetch request to the main page route to verify if the user session exists
+    const userSessionDiv = document.querySelector('.userSession');
+    const response = await fetch('http://localhost:3000/api/main-page',{ credentials: "include" });
+    const result = await response.json();
+    console.log('User session verification result:', result);
+    if(result.logged) 
+    {
+        userSessionDiv.innerHTML = `
+        <span >👋 Hola ${result.user.email}</span>
+        <a href="backend/cerrarSesion.php" style="margin-left:12px;">Cerrar sesión</a>
+        `
+    }
+    else{
+        userSessionDiv.innerHTML = `
+        <a href="login.html" style="margin-left:12px;">Iniciar sesión</a>
+        `;
     }
 }
 
@@ -274,4 +295,7 @@ document.addEventListener('DOMContentLoaded', () => {
         alert('su solicitud ha sido enviada');
         enviarSolicitud(event);
     })
+    verifyUserSession();
+
+
 });
