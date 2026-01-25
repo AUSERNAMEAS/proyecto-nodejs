@@ -7,11 +7,7 @@ async function createRequest(req, res)
   {
     //here we wait forthe user to send the data through the body, then we validate if the required data is present
     const { productType, instructions, imageFileName } = req.body;
-console.log('BODY:', req.body);
-console.log('productType:', productType);
-console.log('imageFileName:', imageFileName);
-
-
+    //if theres any field left to fill we send an error message
     if (!productType || !imageFileName) 
     {
       return res.status(400).json({ success: false, message: 'Debe especificar un tipo de producto y una imagen.' });

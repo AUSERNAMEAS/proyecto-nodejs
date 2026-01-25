@@ -249,13 +249,13 @@ function increaseQuantity(productId) {
 //remove an item from the cart if quantity is 1 else just decreases the quantity
 function decreaseQuantity(productId) {
     const item = cart.find(arrayProduct => arrayProduct.id_producto === productId);
-    //si es true solo le resta
+    //if its true just decreases
     if (item && item.quantity > 1) {
         item.quantity--;
         renderCart();
     } 
     
-        //si es true lo quit
+        //second case if its 1 just removes it from the cart
     else if (item && item.quantity === 1) {
         removeFromCart(productId);
     }
@@ -268,11 +268,12 @@ async function verifyUserSession() {
     const response = await fetch('http://localhost:3000/api/main-page',{ credentials: "include" });
     const result = await response.json();
     console.log('User session verification result:', result);
+    //if the user is logged in we show his email and a logout link
     if(result.logged) 
     {
         userSessionDiv.innerHTML = `
         <span >👋 Hola ${result.user.email}</span>
-        <a href="backend/cerrarSesion.php" style="margin-left:12px;">Cerrar sesión</a>
+        <a href="http://localhost:3000/api/delete-user-session" style="margin-left:12px;">Cerrar sesión</a>
         `
     }
     else{
@@ -289,6 +290,7 @@ checkoutBtn.addEventListener('click', () => {
 });
 
 document.addEventListener('DOMContentLoaded', () => {
+    //when we load the page we fetch the products and render them
     fetchProducts();
     renderCart();
     document.getElementById("btn-personalized").addEventListener('click',(event)=>{

@@ -1,5 +1,4 @@
 //this file is used to get all products from the database
-const sql = require('mssql');
 const {poolPromise} = require('../config/db');
 // we import the database connection pool to use it in our queries
 async function getAllProducts() 

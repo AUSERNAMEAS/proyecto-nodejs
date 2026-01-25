@@ -1,6 +1,6 @@
 const customRequest = require('../models/createNewUser.model');
 const bcrypt = require('bcrypt'); // importing bcrypt to hash passwords
-const saveUser = require('../utils/functions/userSessionFunctions');
+const {saveUserSessionFunction}= require('../utils/functions/userSessionFunctions');
 
 async function createUser(req, res) 
 {
@@ -20,10 +20,9 @@ async function createUser(req, res)
         }
         // now we can call the model function to create the new user and save the user session
     await customRequest.createNewUser(name, passwordHash, email);
-    saveUser.saveUserSession(req, email);
-    res.json({ success: true, message: 'usuario creado exitosamente' });
-
-
+    saveUserSessionFunction(req, email);
+    console.log('New user created and session saved:', req.session.user);
+    res.redirect('/html/FakeShop.html');
     }
     catch (error)
     {

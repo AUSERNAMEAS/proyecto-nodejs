@@ -23,6 +23,14 @@ app.use('/api/session', sessionTestRoutes);
 const mainPageRoutes = require('./routes/mainPage');
 app.use('/api/main-page', mainPageRoutes);
 
+// route to serach users
+const searchUserRoutes = require('./routes/searchUser');
+app.use('/api/search-user', searchUserRoutes);
+
+// route to delete user session
+const deleteUserSessionRoute = require('./routes/deleteUserSession');
+app.use('/api/delete-user-session', deleteUserSessionRoute);
+
 
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
