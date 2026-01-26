@@ -8,9 +8,9 @@ async function createRequest(req, res)
     //here we wait forthe user to send the data through the body, then we validate if the required data is present
     const { productType, instructions, imageFileName } = req.body;
     //if theres any field left to fill we send an error message
-    if (!productType || !imageFileName) 
+    if (!productType || !imageFileName || instructions) 
     {
-      return res.status(400).json({ success: false, message: 'Debe especificar un tipo de producto y una imagen.' });
+      return res.status(400).json({ success: false, message: 'Debe especificar un tipo de producto y una imagen e instrucciones.' });
     }
     await customRequest.createRequest(productType, instructions, imageFileName);
 

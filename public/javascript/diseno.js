@@ -273,13 +273,40 @@ async function verifyUserSession() {
     {
         userSessionDiv.innerHTML = `
         <span >👋 Hola ${result.user.email}</span>
-        <a href="http://localhost:3000/api/delete-user-session" style="margin-left:12px;">Cerrar sesión</a>
+        <button class="btn-iniciarSesion" id="btnCheckYourAccount">Mi Cuenta</button>
+        <button class="btn-iniciarSesion" id="btnLogout">Cerrar sesión</button>
+        
         `
+        // we add event listeners to the buttons we just created
+        // this is done to avoid adding event listeners to elements that dont exist yet
+        // we add the event listener to the account button
+        const accountBtn = document.getElementById('btnCheckYourAccount');
+        accountBtn.addEventListener('click', () => {
+            window.location.href = '../html/userAccount.html';
+        });
+        // we add the event listener to the logout button
+        const logoutBtn = document.getElementById('btnLogout');
+
+        logoutBtn.addEventListener('click', () => {
+            window.location.href = 'http://localhost:3000/api/delete-user-session';
+        })
+
+        //<a href="/html/Useraccount.html" class="btnCheckYourAccount">Mi cuenta</a>
+        //<a href="http://localhost:3000/api/delete-user-session" style="margin-left:12px;">Cerrar sesión</a>
     }
     else{
         userSessionDiv.innerHTML = `
-        <a href="login.html" style="margin-left:12px;">Iniciar sesión</a>
+        <button class="btn-iniciarSesion" id="btnlogIn">Iniciar sesión</button>
         `;
+        //<a href="login.html" style="margin-left:12px;">Iniciar sesión</a>
+
+        // here we add the event listener to the login button
+        //the same as before
+         const logIn = document.getElementById('btnlogIn');
+         logIn.addEventListener('click', () => {
+            window.location.href = 'login.html';
+        })
+
     }
 }
 
@@ -298,6 +325,9 @@ document.addEventListener('DOMContentLoaded', () => {
         enviarSolicitud(event);
     })
     verifyUserSession();
+
+    // this is the button we added to the user account page to log out
+    //it does the same as the link but as a button
 
 
 });
