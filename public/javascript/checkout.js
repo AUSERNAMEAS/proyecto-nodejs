@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    loadUserAccount();
     //checkout.js
     const cardOption = document.getElementById('card-option');
     const cardDetails = document.getElementById('card-details');
@@ -58,18 +59,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // 4. Enviar datos al PHP
         try {
-            const response = await fetch('backend/procesarPedido.php', {
+            const response = await fetch('http://localhost:3000/api/create-new-order', {
                 method: 'POST',
+                credentials: 'include', 
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(datosPedido) 
             });
 
             const result = await response.json();
+            console.log('Respuesta del servidor:', result);
 
             if (result.success) {
                 alert(` ${result.message}`);
                 sessionStorage.removeItem('carritoTemporal'); 
-                window.location.href = 'FakeShop.php'; 
+                window.location.href = '/html/FakeShop.html'; 
             } else {
                 alert(`Error al procesar el pedido: ${result.message}`);
             }
@@ -86,3 +89,21 @@ document.addEventListener('DOMContentLoaded', () => {
         cardDetails.style.display = 'block';
     }
 });
+
+async function loadUserAccount() 
+{
+    try
+    {
+        //we gonna fetch the session to use to build the cointainer
+        const response = await fetch('http://localhost:3000/api/main-page');
+        const result = await response.json();
+        console.log('User account data:', result);
+        
+
+    }
+    catch (error)
+    {
+        console.error('Error fetching user account data:', error);
+    }
+
+}

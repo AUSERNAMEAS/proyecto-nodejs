@@ -7,6 +7,7 @@ function saveUserSessionFunction(req, email)
 
     req.session.save(()=>{
         console.log('User session saved:', req.session.user);
+
     });
 }
 
@@ -25,7 +26,26 @@ function deleteUserSessionFunction(req,res)
     });
 }
 
+function verifySessionFunction(req, res, next) {
+  console.log('--- MIDDLEWARE ---');
+  console.log('Cookies:', req.headers.cookie);
+  console.log('Session:', req.session);
+  
+  if (req.session.user && req.session.user.logged) 
+ { 
+    //we use next to continue with the request,this is just a middleware
+    return next();
+  }
+
+  return res.status(401).json({
+    success: false,
+    message: 'no user session found, please log in to continue.'
+  });
+}
+
+
 module.exports = {
     saveUserSessionFunction,
-    deleteUserSessionFunction
+    deleteUserSessionFunction,
+    verifySessionFunction
 }

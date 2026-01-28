@@ -31,6 +31,10 @@ app.use('/api/search-user', searchUserRoutes);
 const deleteUserSessionRoute = require('./routes/deleteUserSession');
 app.use('/api/delete-user-session', deleteUserSessionRoute);
 
+// route to create new order
+const createNewOrderRoutes = require('./routes/createNewOrder');
+app.use('/api/create-new-order', createNewOrderRoutes);
+
 
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
