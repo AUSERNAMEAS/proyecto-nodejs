@@ -27,12 +27,11 @@ function renderProducts() {
         if (allProducts[i]) {
             const product = allProducts[i];
             const productCard = document.createElement('div');
+            let sizeHTML = ``;
             productCard.className = 'product-card';
-            productCard.innerHTML = `
-                <h3>${product.nombre}</h3>
-                <img src="/${product.imagen}" alt="${product.nombre}">
-                <p>$${product.precio_unitario.toFixed(2)} MXN</p>
-                
+            if(product.categoria === 'prenda')
+            {
+                sizeHTML = `
                 <div style="margin-bottom:10px;">
                     <label>Talla: </label>
                     <select id="talla-${product.id_producto}">
@@ -42,8 +41,17 @@ function renderProducts() {
                         <option value="XL">XL</option>
                     </select>
                 </div>
+                `;
+            }
+            productCard.innerHTML = `
+                <h3>${product.nombre}</h3>
+                <img src="/${product.imagen}" alt="${product.nombre}">
+                <p>$${product.precio_unitario.toFixed(2)} MXN</p>
+                ${sizeHTML}
 
                 <button onclick="prepararCompra(${product.id_producto})">Agregar al Carrito</button>
+
+                
             `;
             productGrid.appendChild(productCard);
         }
@@ -53,12 +61,7 @@ function renderProducts() {
 // Función intermedia para capturar la talla seleccionada
 function prepararCompra(productId) {
     const select = document.getElementById(`talla-${productId}`);
-    if (!select) {
-        console.error(`No se encontró el selector de talla para producto ${productId}`);
-        alert('Error interno: no se pudo obtener la talla seleccionada. Por favor recarga la página.');
-        return;
-    }
-    const tallaSeleccionada = select.value;
+    const tallaSeleccionada = select ? select.value : '';
     addToCart(productId, tallaSeleccionada);
 }
 
@@ -69,17 +72,30 @@ function addToCart(productId, talla) {
     const productToAdd = allProducts.find(p => p.id_producto === productId);
     const existingItem = cart.find(item => item.id_producto === productId && item.talla === talla);
 
-    if (existingItem) {
-        if (existingItem.quantity < 10) {
+    if (existingItem) 
+    {
+        if (existingItem.quantity < 10) 
+        {
             existingItem.quantity++;
-        } else {
+        } 
+        else 
+        {
             alert('Límite alcanzado: Solo puedes agregar un máximo de 10 unidades por producto/talla.');
             return;
         }
-    } else {
+    } 
+    else 
+    {
         cart.push({ ...productToAdd, quantity: 1, talla: talla });
     }
-    alert(`${productToAdd.nombre} (Talla ${talla}) agregado al carrito.`);
+    // this change the alert to show the size if it exists
+    if (talla) 
+    {
+        alert(`${productToAdd.nombre} (Talla ${talla}) agregado al carrito.`);
+    } else 
+    {
+        alert(`${productToAdd.nombre} agregado al carrito.`);
+    }
     renderCart();
 }
 
@@ -209,7 +225,7 @@ function renderCart() {
         const itemDiv = document.createElement('div');
         itemDiv.className = 'cart-item';
         itemDiv.innerHTML = `
-            <span>${item.nombre}</span>
+            <span>${item.nombre} ${item.talla ? `(Talla ${item.talla})` : ''}</span>
             <div class="cart-quantity">
                 <button onclick="decreaseQuantity(${item.id_producto})">-</button>
                 <span>${item.quantity}</span>

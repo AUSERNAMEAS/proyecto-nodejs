@@ -10,7 +10,8 @@ async function getAllProducts()
             id_producto,
             nombre,
             precio_unitario,
-            imagen
+            imagen,
+            categoria
         FROM producto
     `);
         //we use recordser to get the array of results

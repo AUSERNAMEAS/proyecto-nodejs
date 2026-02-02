@@ -42,9 +42,9 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const metodoPago = document.querySelector('input[name="payment-method"]:checked').value;
-        let subtotal = carrito.reduce((acc, item) => acc + parseFloat(item.price) * item.quantity, 0);
+        let subtotal = carrito.reduce((acc, item) => acc + parseFloat(item.precio_unitario) * item.quantity, 0);
         const costoEnvio = subtotal > 0 ? 80 : 0; 
-        const totalPagar = subtotal + costoEnvio;
+        const totalPagar = subtotal + costoEnvio; 
 
         const datosPedido = {
             carrito: carrito,
