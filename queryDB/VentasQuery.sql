@@ -190,3 +190,16 @@ CREATE TABLE solicitud_personalizacion (
 ALTER TABLE solicitud_personalizacion
 ADD imagen_nombre VARCHAR(150);
 select * from solicitud_personalizacion
+
+alter table solicitud_personalizacion
+drop column imagen_url
+
+alter table solicitud_personalizacion
+add json_disenio NVARCHAR(max)
+
+select envio.id_pedido,fecha_envio,SUM(subtotal) as suma_total,estado_envio
+from envio INNER JOIN detalle_pedido ON
+detalle_pedido.id_pedido = envio.id_pedido
+where id_cliente = @id_cliente
+group by envio.id_pedido, envio.fecha_envio,
+   envio.estado_envio;

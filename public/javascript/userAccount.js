@@ -1,3 +1,4 @@
+
 async function loadUserAccount() 
 {
     try
@@ -20,18 +21,11 @@ async function loadUserAccount()
             <!-- ===== PEDIDOS ===== -->
         <section class="account-card">
             <h2>Mis pedidos</h2>
-            <!-- Contenedor donde luego cargarás pedidos -->
-            <div class="orders-list">
+            <!-- Container to load prders -->
+            <div class="userOrders">
 
-                <!-- Pedido ejemplo -->
-                <div class="order-item">
-                    <p><strong>Pedido #001</strong></p>
-                    <p>Fecha: <!-- fecha --></p>
-                    <p>Total: $<!-- total --></p>
-                    <p>Estado: <!-- estado --></p>
-                </div>
 
-                <!-- Aquí luego se generan más pedidos -->
+                <!-- here we will added more orders -->
             </div>
         </section>
         `;
@@ -44,6 +38,40 @@ async function loadUserAccount()
 
 }
 
+async function loadOrders()
+{
+    //we fetch the orders of the user to load them in html
+    const response = await fetch('http://localhost:3000/api/user-page', {
+    method: 'GET',
+    credentials: 'include' // sent cookies with the request
+  });
+    const result = await response.json();
+    const ordersContainer = document.querySelector('.userOrders');
+    for (const order of result)
+        {
+            ordersContainer.innerHTML += `
+            <div class="order-item">
+                <p><strong>Pedido #${order.id_pedido}</strong></p>
+                <p>Fecha: ${new Date(order.fecha_envio).toLocaleDateString()}</p>
+                <p>Total: $${order.suma_total}</p>
+                <p>Estado: ${order.estado_envio}</p>
+
+                 <div class="order-button">
+                    <button class="btn-show-details">Ver detalles</button>
+                </div>
+            </div>
+            `;
+        }
+    console.log('User orders data:', result);
+
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     loadUserAccount();
+    loadOrders();
+    const leaveAccountButton = document.getElementById('logOutUser');
+    leaveAccountButton.addEventListener('click', () => 
+        {
+            window.location.href = '../html/FakeShop.html';
+        })
 });

@@ -129,8 +129,8 @@ async function insertShippingDetails(idOrder, data)
         input('direccion_envio', shipppingAddress).
         input('costo_envio', data.costo_envio).
         query(`
-            INSERT INTO envio (id_pedido, direccion_envio, empresa_envio, costo_envio,numero_guia, estado_envio, fecha_envio) 
-            VALUES (@id_pedido, @direccion_envio, 'pendiente', @costo_envio,'pendiente' ,'Procesando pago', GETDATE())
+            INSERT INTO envio (id_pedido, direccion_envio, empresa_envio, costo_envio,numero_guia, estado_envio, fecha_envio,fecha_entrega) 
+            VALUES (@id_pedido, @direccion_envio, 'pendiente', @costo_envio,'pendiente' ,'Procesando pago', GETDATE(), NULL)
         `);
         console.log("Shipping details inserted successfully");
     }

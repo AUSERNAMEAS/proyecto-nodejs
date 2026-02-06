@@ -1,0 +1,20 @@
+.btn-show-details {
+    background-color: #6a0dad;
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-show-details:hover {
+    background-color: #8a2be2;
+    transform: scale(1.05);
+}
+.order-button {
+    margin-top: auto;
+    display: flex;
+    justify-content: flex-start;
+}

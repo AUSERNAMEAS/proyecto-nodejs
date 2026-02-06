@@ -20,3 +20,19 @@ const orderDataExample = {
   "total_final": "300.00",
   "costo_envio": "80.00"
 }
+
+const ordersById {
+  estado_envio
+: 
+"Procesando pago"
+fecha_envio
+: 
+"2026-02-02T00:00:00.000Z"
+id_pedido
+: 
+6
+suma_total
+: 
+550
+
+}

@@ -12,6 +12,20 @@ async function searchUserByEmail(email)
     return result.recordset;
 }
 
+async function searchOrdersByUserId(idUser)
+{
+    const pool = await poolPromise;
+    const result = await pool.request().
+    input('id_cliente', idUser).query(`
+     select envio.id_pedido,fecha_envio,SUM(subtotal) as suma_total,estado_envio
+    from envio INNER JOIN detalle_pedido ON
+    detalle_pedido.id_pedido = envio.id_pedido
+    where id_cliente = @id_cliente
+    group by envio.id_pedido, envio.fecha_envio,
+    envio.estado_envio;`);
+    return result.recordset;
+}
 module.exports = {
-    searchUserByEmail
+    searchUserByEmail,
+    searchOrdersByUserId
 };

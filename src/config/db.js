@@ -17,13 +17,13 @@ const poolPromise = new sql.ConnectionPool(config)
   .connect()
   .then(pool => 
   {
-    console.log('✅ Conectado a SQL Server');
+    console.log(' Conectado a SQL Server');
     return pool;
   })
   .catch(err => 
   {
-    console.error('❌ Error de conexión DB:', err);
-    throw err; // ⬅️ ESTO ES CLAVE
+    console.error(' Error de conexión DB:', err);
+    throw err; 
   });
 
 

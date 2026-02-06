@@ -35,7 +35,12 @@ app.use('/api/delete-user-session', deleteUserSessionRoute);
 const createNewOrderRoutes = require('./routes/createNewOrder');
 app.use('/api/create-new-order', createNewOrderRoutes);
 
+// route to user page
+const userPageRoutes = require('./routes/userPage');
+app.use('/api/user-page', userPageRoutes);
+
 
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
+

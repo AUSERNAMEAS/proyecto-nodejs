@@ -1,4 +1,5 @@
-function verifyUserSession(req,res)
+
+function verifyUserSession(req,res,next)
 {
     //verify if the user session exists
     if (req.session.user) 
@@ -9,6 +10,7 @@ function verifyUserSession(req,res)
       logged: true,
       user: req.session.user
     });
+    
     } 
     else 
     {
@@ -16,4 +18,5 @@ function verifyUserSession(req,res)
     }
 }
 
-module.exports = { verifyUserSession };
+
+module.exports = { verifyUserSession};

@@ -5,18 +5,21 @@ async function createRequest(req, res)
 {
   try 
   {
-    //here we wait forthe user to send the data through the body, then we validate if the required data is present
-    const { productType, instructions, imageFileName } = req.body;
-    //if theres any field left to fill we send an error message
-    if (!productType || !imageFileName || instructions) 
-    {
-      return res.status(400).json({ success: false, message: 'Debe especificar un tipo de producto y una imagen e instrucciones.' });
-    }
-    await customRequest.createRequest(productType, instructions, imageFileName);
+      //here we wait forthe user to send the data through the body, then we validate if the required data is present
+      const { productType, instructions, imageFileName } = req.body;
+      console.log('Received custom request data:', req.body);
+      //if theres any field left to fill we send an error message
+      if (!productType || !imageFileName || !instructions) 
+      {
+        throw new Error('Faltan datos obligatorios.');
+        return res.status(400).json({ success: false, message: 'Faltan datos obligatorios.' });
+      }
+      await customRequest.createRequest(productType, instructions, imageFileName);
 
-    res.json({ success: true, message: 'Solicitud enviada correctamente.¡Pronto te contactaremos!' });  } 
+      res.json({ success: true, message: 'Solicitud enviada correctamente.¡Pronto te contactaremos!' });  } 
   catch (error) 
   {
+    console.log('Error creating custom request:', error);
     res.status(500).json({ success: false, message: error.message });
   }
 };

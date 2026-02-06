@@ -6,11 +6,11 @@ async function createRequest(tipo_producto, instrucciones, imagen_nombre) {
   await pool.request()
     .input('tipo_producto', tipo_producto)
     .input('instrucciones', instrucciones)
-    .input('imagen_nombre', imagen_nombre)
+    //.input('imagen_nombre', imagen_nombre)
     .query(`
       INSERT INTO solicitud_personalizacion 
-      (tipo_producto, instrucciones, imagen_nombre, estado, fecha_solicitud)
-      VALUES (@tipo_producto, @instrucciones, @imagen_nombre, 'Pendiente', GETDATE())
+      (tipo_producto, instrucciones, json_disenio, estado, fecha_solicitud)
+      VALUES (@tipo_producto, @instrucciones, 'pendiente', 'Pendiente', GETDATE())
     `);
 }
 

@@ -148,11 +148,13 @@ async function enviarSolicitud(e) {
         instructions: instructions,
         imageFileName: imageFileName
     };
+    //console.log('Request Data:', requestData);
 
     personalizedBtn.textContent = 'Enviando...';
     personalizedBtn.disabled = true;
 
     try {
+        
         const response = await fetch('http://localhost:3000/api/custom-requests', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -168,16 +170,20 @@ async function enviarSolicitud(e) {
             document.getElementById('instructions').value = '';
             customImageInput.value = null;
         }
+        else
+        {
+            alert('Error al enviar la solicitud de personalización: ' + result.message);
+        }
         }  
-    catch (error) 
-    {
-        alert('Error de conexión al servidor al intentar enviar la solicitud.');
-    } 
-    finally 
-    {
-        personalizedBtn.textContent = 'Enviar Solicitud de Personalización';
-        personalizedBtn.disabled = false;
-    }
+        catch (error) 
+        {
+            console.log(error)
+        } 
+        finally 
+        {
+            personalizedBtn.textContent = 'Enviar Solicitud de Personalización';
+            personalizedBtn.disabled = false;
+        }
 }
 
 async function fetchProducts(){
@@ -337,7 +343,7 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchProducts();
     renderCart();
     document.getElementById("btn-personalized").addEventListener('click',(event)=>{
-        alert('su solicitud ha sido enviada');
+        //alert('su solicitud ha sido enviada');
         enviarSolicitud(event);
     })
     verifyUserSession();
