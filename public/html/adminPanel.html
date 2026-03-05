@@ -221,7 +221,7 @@ if ($pedidos_pendientes === 0) $pedidos_pendientes = 'N/A';
                     <th>Detalles</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="ordersTableBody">
                 &lt;?php if (!empty($pedidos_recientes)): ?&gt;
                     &lt;?php foreach ($pedidos_recientes as $pedido): ?&gt;
     <tr>
@@ -239,11 +239,9 @@ if ($pedidos_pendientes === 0) $pedidos_pendientes = 'N/A';
         </td>
         <td><a href="#">Ver</a></td>
     </tr>
-&lt;?php endforeach; ?&gt;
 
-<button id="save-orders-btn" class="btn-product-action" style="background-color: #007bff; margin-top: 1rem;">
-    Actualizar Estados de Pedidos
-</button>
+
+
                 &lt;?php else: ?&gt;
                     <tr>
                         <td colspan="6">No hay pedidos recientes registrados en la base de datos.</td>
@@ -251,13 +249,17 @@ if ($pedidos_pendientes === 0) $pedidos_pendientes = 'N/A';
                 &lt;?php endif; ?&gt;
             </tbody>
         </table>
+
+        <button id="save-orders-btn" class="btn-product-action" style="background-color: #007bff; margin-top: 1rem;">
+    Actualizar Estados de Pedidos
+</button>
     </div>
 </section>
 
         <section id="custom-requests">
             <h2>Solicitudes de Personalización Pendientes</h2>
             <p>Sección para gestionar las solicitudes del formulario 'Personaliza tu Producto'.</p>
-            <ul>
+            <ul id="customRequestsList">
                 &lt;?php if (!empty($solicitudes_pendientes)): ?&gt;
                     &lt;?php foreach ($solicitudes_pendientes as $solicitud): ?&gt;
                         <li>
@@ -289,7 +291,7 @@ if ($pedidos_pendientes === 0) $pedidos_pendientes = 'N/A';
                             <th>Modificar Stock</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="productStockBody">
                         &lt;?php foreach ($productos_stock as $producto): ?&gt;
                         <tr data-product-id="&lt;?php echo $producto['id_producto']; ?&gt;">
                             <td>&lt;?php echo $producto['id_producto']; ?&gt;</td>
@@ -351,6 +353,18 @@ if ($pedidos_pendientes === 0) $pedidos_pendientes = 'N/A';
         </section>
 
     </div>
-    <script src="scripts/adminPanel.js"></script>
+
+
+    <!--modal to display the customRequest -->
+    <div id="customModal" class="modal">
+        <div class="modal-content">
+            <span id="closeModal" class="close">&times;</span>
+            <h3>Diseño de la Solicitud</h3>
+            <img id="previewImage" style="max-width:100%; margin-top:1rem;" />
+            <br><br>
+            <button id="approveBtn">Aprobar</button>
+        </div>
+    </div>
+    <script src="../javascript/adminPanel.js"></script>
     </body>
 </html>

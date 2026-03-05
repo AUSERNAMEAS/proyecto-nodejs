@@ -13,21 +13,30 @@ async function searchUser(req, res)
         const fetch = await searchRequest.searchUserByEmail(loginEmail);
         // u have to access the first element of the array to get the user data
         const user = fetch[0];
+        console.log('Fetched user:', user);
 
         // if the fetch soesnt return any user we send a response saying the user doesnt exist
         if (!fetch.length) 
         {
             return res.json({ success: false, message: "Usuario no existe" });
-            }
+        }
         const passwordCompared = await bcrypt.compare(loginPassword,user.contrasenia_hash);
-        //res.json(passwordCompared);
-
-        if (passwordCompared)
+        // we check if the user is an Admin or a regular user and we redirect them to the corresponding page
+        if (passwordCompared && user.rol === 'cliente')
         {
             // now we save the user session
             saveUserSessionFunction(req, loginEmail);
             res.redirect('/html/FakeShop.html');
         }
+        else if (passwordCompared && user.rol === 'Administrador')
+        {
+            saveUserSessionFunction(req, loginEmail);
+            res.redirect('/html/adminPanel.html');
+        }/*
+        else
+        {
+            res.json({ success: false, message: "Contraseña incorrecta" });
+        }*/
     }
 
     catch (error)

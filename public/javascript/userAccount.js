@@ -66,6 +66,20 @@ async function loadOrders()
 
 }
 
+async function showImageCustomRequest(id_solicitud)
+{
+    try
+    {
+        const image = await fetch(`/api/custom-request/get-image/1004`)
+        const result = await image.json();
+        const imageContainer = document.querySelector('.imagePreview');
+        imageContainer.src = result.json_disenio;
+    }
+    catch (error)    {
+        console.error('Error fetching custom request image:', error);
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     loadUserAccount();
     loadOrders();

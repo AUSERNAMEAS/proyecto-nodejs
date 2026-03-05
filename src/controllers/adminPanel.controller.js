@@ -1,0 +1,76 @@
+const {getOrders, getPendingShipments, getMonthlySales,getRecentShipments, getRecentOrders, getPendingCustomRequests, getStockProducts,addNewProduct,updateStockProducts} = require ('../models/adminPanel.model')
+
+async function fillDashboard(req, res)
+{
+    try
+    {
+        const orders = await getOrders();
+        const pendingShipments = await getPendingShipments();
+        const monthlySales = await getMonthlySales();
+        const recentShipments = await getRecentShipments();
+        const recentOrders = await getRecentOrders();
+        const pendingCustomRequests = await getPendingCustomRequests();
+        const stockProducts = await getStockProducts();
+
+        res.json({
+            success: true,
+            data: {
+        totalOrders: orders?? 0,
+        pendingRequests: pendingShipments?? 0,
+        monthlySales: monthlySales ?? 0,
+        recentShipments: recentShipments,
+        recentOrders: recentOrders,
+        pendingCustomRequests: pendingCustomRequests,
+        stockProducts: stockProducts
+    }
+        });
+    }
+    catch (error)
+    {
+        res.status(500).json({ success: false, message: error.message });
+    }
+}
+
+async function addNewProductController(req, res) {
+    try 
+    {
+        const { nombre, descripcion, stock, categoria, peso_kg, estado_producto, precio, imagen } = req.body;
+        const result = await addNewProduct(nombre, descripcion, stock, categoria, peso_kg, estado_producto, precio, imagen);
+        res.json({ success: true, message: "Producto agregado exitosamente", affectedRows: result });
+    }
+    catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+}
+
+async function updateStock(req, res){
+
+    try {
+
+        const products = req.body;
+
+        if(!Array.isArray(products)){
+            return res.status(400).json({
+                success:false,
+                message:"Datos inválidos"
+            });
+        }
+
+        const result = await updateStockProducts(products);
+
+        res.json(result);
+
+    } catch(error){
+
+        res.status(500).json({
+            success:false,
+            message:error.message
+        });
+    }
+}
+
+module.exports = {
+    fillDashboard,
+    addNewProductController,
+    updateStock
+}

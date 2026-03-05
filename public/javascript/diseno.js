@@ -104,12 +104,14 @@ function addToCart(productId, talla) {
  */
 const dropZone = document.getElementById('drop-zone');
 const customImageInput = document.getElementById('custom-image');
+let imageBase64 = "";
 
 if (customImageInput) {
     customImageInput.addEventListener('change', function(e) {
         const reader = new FileReader();
         reader.onload = function(event) {
-            dropZone.innerHTML = `<img src="${event.target.result}" id="drag-design" draggable="true" style="max-width:100px; cursor:move;">`;
+            imageBase64 = event.target.result;
+            dropZone.innerHTML = `<img src="${imageBase64}" id="drag-design" draggable="true" style="max-width:100px; cursor:move;">`;
             const dragImg = document.getElementById('drag-design');
             dragImg.addEventListener('dragstart', (ev) => {
                 ev.dataTransfer.setData("text", ev.target.id);
@@ -146,7 +148,8 @@ async function enviarSolicitud(e) {
     const requestData = {
         productType: productType,
         instructions: instructions,
-        imageFileName: imageFileName
+        imageFileName: imageFileName,
+        imageBase64: imageBase64
     };
     //console.log('Request Data:', requestData);
 

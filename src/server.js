@@ -39,6 +39,14 @@ app.use('/api/create-new-order', createNewOrderRoutes);
 const userPageRoutes = require('./routes/userPage');
 app.use('/api/user-page', userPageRoutes);
 
+// route to get custom request image
+const getImageCustomRoutes = require('./routes/getImageCustom');
+app.use('/api/admin-panel/customImage', getImageCustomRoutes);
+
+// route to admin panel
+const adminPanelRoutes = require('./routes/adminPanel');
+app.use('/api/admin-panel', adminPanelRoutes);
+
 
 app.listen(PORT, () => {
   console.log(`Servidor corriendo en http://localhost:${PORT}`);
