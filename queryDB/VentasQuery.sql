@@ -197,6 +197,14 @@ drop column imagen_url
 alter table solicitud_personalizacion
 add json_disenio NVARCHAR(max)
 
+ALTER TABLE solicitud_personalizacion
+ADD id_cliente INT;
+
+ALTER TABLE solicitud_personalizacion
+ADD CONSTRAINT FK_solicitud_cliente
+FOREIGN KEY (id_cliente)
+REFERENCES cliente(id_cliente);
+
 select envio.id_pedido,fecha_envio,SUM(subtotal) as suma_total,estado_envio
 from envio INNER JOIN detalle_pedido ON
 detalle_pedido.id_pedido = envio.id_pedido

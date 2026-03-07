@@ -131,6 +131,24 @@ document.addEventListener("DOMContentLoaded", () => {
            </button>
         </li>
     `,
+// we gonna use this later to add the email and phone number as data attributes in the backend when rendering the pending requests list, so we can use them when approving the request to add contact icons with links to email and whatsapp
+    /*.map(
+  (solicitud) => `
+<li 
+  data-email="${solicitud.email_cliente}"
+  data-phone="${solicitud.telefono_cliente}"
+>
+  <strong>ID: ${solicitud.id_solicitud}</strong>
+  (Fecha: ${solicitud.fecha_solicitud})
+  ${solicitud.tipo_producto}:
+  ${solicitud.instrucciones}
+
+  - <button class="view-custom-btn" data-id="${solicitud.id_solicitud}">
+      Ver / Aprobar
+    </button>
+</li>
+`,
+) */
         )
         .join("");
     }
@@ -379,4 +397,32 @@ loadPage();
       modal.style.display = "none";
     }
   };
+
+  document.getElementById("approveBtn").addEventListener("click", function () {
+
+  const requestId = this.getAttribute("data-id");
+
+  // close the modal
+  document.getElementById("customModal").style.display = "none";
+
+  // finds the corresponding solicitud item in the list using the requestId
+  const solicitudItem = document.querySelector(`button[data-id="${requestId}"]`).parentElement;
+
+  // user data (should come from the backend)
+  const correoCliente = solicitudItem.getAttribute("data-email");
+  const telefonoCliente = solicitudItem.getAttribute("data-phone");
+
+  // add contact icons with links to email and whatsapp using the user data, we will need to add the email and phone number as data attributes in the backend when rendering the pending requests list
+  solicitudItem.innerHTML += `
+    <span style="margin-left:10px;">
+      <a href="mailto:${correoCliente}" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" width="20">
+      </a>
+
+      <a href="https://wa.me/${8117431614}" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="20">
+      </a>
+    </span>
+  `;
+});
 });

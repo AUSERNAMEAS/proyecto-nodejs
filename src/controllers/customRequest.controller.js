@@ -1,12 +1,19 @@
 const customRequest = require('../models/customRequest.model');
+const {getUserByEmail} = require('../models/createNewOrder.model');
+
 
 //here we import the router module and the result of the query(model) to create a custom request
 async function createRequest(req, res)
 {
   try 
-  {
+  {  //we get the user from the session to use it later
+        const email = req.session.user.email;
+        const userRaw= await getUserByEmail(email);
+        const userID = userRaw.id_cliente;
+
+
       //here we wait forthe user to send the data through the body, then we validate if the required data is present
-      const { productType, instructions, imageFileName, imageBase64 } = req.body;
+      const { productType, instructions, imageFileName, imageBase64} = req.body;
       console.log('Received custom request data:', req.body);
       //if theres any field left to fill we send an error message
       if (!productType || !imageFileName || !instructions || !imageBase64) 
@@ -14,7 +21,7 @@ async function createRequest(req, res)
         throw new Error('Faltan datos obligatorios.');
         return res.status(400).json({ success: false, message: 'Faltan datos obligatorios.' });
       }
-      await customRequest.createRequest(productType, instructions, imageFileName, imageBase64);
+      await customRequest.createRequest(productType, instructions, imageFileName, imageBase64,userID);
 
       res.json({ success: true, message: 'Solicitud enviada correctamente.¡Pronto te contactaremos!' });  } 
   catch (error) 
