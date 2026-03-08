@@ -119,38 +119,63 @@ document.addEventListener("DOMContentLoaded", () => {
     `;
     } else {
       customList.innerHTML = result.data.pendingCustomRequests
-        .map(
-          (solicitud) => `
-        <li>
+        .map((solicitud) => {
+
+        if (solicitud.estado === "Aceptada") {
+
+          return `
+          <li
+            data-email="${solicitud.correo}"
+            data-phone="${solicitud.telefono}"
+            data-status="${solicitud.estado}"
+          >
             <strong>ID: ${solicitud.id_solicitud}</strong>
             (Fecha: ${solicitud.fecha_solicitud})
             ${solicitud.tipo_producto}:
             ${solicitud.instrucciones}
-            - <button class="view-custom-btn" data-id="${solicitud.id_solicitud}">
-             Ver / Aprobar
-           </button>
-        </li>
-    `,
-// we gonna use this later to add the email and phone number as data attributes in the backend when rendering the pending requests list, so we can use them when approving the request to add contact icons with links to email and whatsapp
-    /*.map(
-  (solicitud) => `
-<li 
-  data-email="${solicitud.email_cliente}"
-  data-phone="${solicitud.telefono_cliente}"
->
-  <strong>ID: ${solicitud.id_solicitud}</strong>
-  (Fecha: ${solicitud.fecha_solicitud})
-  ${solicitud.tipo_producto}:
-  ${solicitud.instrucciones}
 
-  - <button class="view-custom-btn" data-id="${solicitud.id_solicitud}">
-      Ver / Aprobar
-    </button>
-</li>
-`,
-) */
-        )
+            <button class="view-custom-btn" data-id="${solicitud.id_solicitud}" data-status="${solicitud.estado}">
+              Aprobado
+            </button>
+
+            <span style="margin-left:10px;">
+              <a href="mailto:${solicitud.correo}" target="_blank">
+                <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" width="20">
+              </a>
+
+              <a href="https://wa.me/${solicitud.telefono}" target="_blank">
+                <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="20">
+              </a>
+            </span>
+
+          </li>
+          `;
+
+        } else {
+
+          return `
+          <li
+            data-email="${solicitud.correo}"
+            data-phone="${solicitud.telefono}"
+          >
+            <strong>ID: ${solicitud.id_solicitud}</strong>
+            (Fecha: ${solicitud.fecha_solicitud})
+            ${solicitud.tipo_producto}:
+            ${solicitud.instrucciones}
+
+            <button class="view-custom-btn" data-id="${solicitud.id_solicitud}">
+              Ver / Aprobar
+            </button>
+
+          </li>
+          `;
+
+        }
+          
+         
+        })
         .join("");
+        
     }
   }
 
@@ -357,6 +382,18 @@ loadPage();
   document.addEventListener("click", async function (e) {
     if (e.target.classList.contains("view-custom-btn")) {
       const id = e.target.getAttribute("data-id");
+      const solicitudItem = e.target.parentElement;
+      const status = solicitudItem.getAttribute("data-status");
+
+      const approveBtn = document.getElementById("approveBtn");
+
+      if (status === "Aceptada") {
+        approveBtn.disabled = true;
+        approveBtn.textContent = "Ya aprobado";
+      } else {
+        approveBtn.disabled = false;
+        approveBtn.textContent = "Aprobar";
+      }
 
       try {
         const response = await fetch(
@@ -398,16 +435,38 @@ loadPage();
     }
   };
 
-  document.getElementById("approveBtn").addEventListener("click", function () {
+  document.getElementById("approveBtn").addEventListener("click", async function () {
 
   const requestId = this.getAttribute("data-id");
+  console.log("Aprobar solicitud con ID:", requestId);
+  // we sent this to updat the status order to accepted
+  try{
+    const response = await fetch(`http://localhost:3000/api/admin-panel/accept-custom-order/${requestId}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        //body: JSON.stringify(stockUpdates), // Enviamos el array completo de cambios
+      });
+
+      const result = await response.json();
+      console.log(result);
+  }
+  catch(error){
+    console.error("Error al aprobar la solicitud:", error);
+  }
+  
 
   // close the modal
   document.getElementById("customModal").style.display = "none";
+  
 
+  // refersh the page
+  window.location.reload();
   // finds the corresponding solicitud item in the list using the requestId
-  const solicitudItem = document.querySelector(`button[data-id="${requestId}"]`).parentElement;
-
+  //const solicitudItem = document.querySelector(`button[data-id="${requestId}"]`).parentElement;
+  // we update the status so u cant apprve it againo
+  //solicitudItem.setAttribute("data-status", "Aceptada");
   // user data (should come from the backend)
   const correoCliente = solicitudItem.getAttribute("data-email");
   const telefonoCliente = solicitudItem.getAttribute("data-phone");
@@ -419,7 +478,7 @@ loadPage();
         <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" width="20">
       </a>
 
-      <a href="https://wa.me/${8117431614}" target="_blank">
+      <a href="https://wa.me/${telefonoCliente}" target="_blank">
         <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" width="20">
       </a>
     </span>

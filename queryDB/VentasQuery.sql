@@ -211,3 +211,18 @@ detalle_pedido.id_pedido = envio.id_pedido
 where id_cliente = @id_cliente
 group by envio.id_pedido, envio.fecha_envio,
    envio.estado_envio;
+
+
+            SELECT 
+            id_solicitud,
+            CONVERT(VARCHAR(10), fecha_solicitud, 120) AS fecha_solicitud,
+            tipo_producto,
+            instrucciones,
+            solicitud_personalizacion.id_cliente,
+            telefono,
+            correo,
+            estado
+
+        FROM solicitud_personalizacion INNER JOIN cliente ON
+        solicitud_personalizacion.id_cliente = cliente.id_cliente
+        ORDER BY fecha_solicitud DESC

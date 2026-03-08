@@ -7,7 +7,7 @@ async function getOrders()
     const result = await pool.request().query(`
       SELECT COUNT(id_pedido) AS TotalPedidos FROM pedido
     `);
-        console.log('DEBUG - Orders:', result.recordset); // 👈 debug
+    //console.log('DEBUG - Orders:', result.recordset); // 👈 debug
 
     return result.recordset[0].TotalPedidos;
 }
@@ -82,13 +82,19 @@ async function getPendingCustomRequests() {
     const pool = await poolPromise;
 
     const result = await pool.request().query(`
-        SELECT 
+        
+            SELECT 
             id_solicitud,
             CONVERT(VARCHAR(10), fecha_solicitud, 120) AS fecha_solicitud,
             tipo_producto,
-            instrucciones
-        FROM solicitud_personalizacion
-        WHERE estado = 'Pendiente'
+            instrucciones,
+            solicitud_personalizacion.id_cliente,
+            telefono,
+            correo,
+            estado
+
+        FROM solicitud_personalizacion INNER JOIN cliente ON
+        solicitud_personalizacion.id_cliente = cliente.id_cliente
         ORDER BY fecha_solicitud DESC
     `);
 
@@ -152,6 +158,22 @@ async function updateStockProducts(productos){
     };
 }
 
+async function acceptCustomRequest(id_request) {
+    const pool = await poolPromise;
+    await pool.request()
+        .input('id_request', id_request)
+        .query(`
+            UPDATE solicitud_personalizacion
+            SET estado = 'Aceptada'
+            WHERE id_solicitud = @id_request
+        `);
+    
+    return {
+        success: true,
+        message: "Solicitud aceptada correctamente"
+    };
+}
+
 module.exports = {
     getOrders,
     getPendingShipments,
@@ -161,5 +183,6 @@ module.exports = {
     getPendingCustomRequests,
     getStockProducts,
     addNewProduct,
-    updateStockProducts
+    updateStockProducts,
+    acceptCustomRequest
 };
