@@ -63,15 +63,21 @@ async function getRecentOrders()
     const pool = await poolPromise;
 
     const result = await pool.request().query(`
-        SELECT TOP 10
-            p.id_pedido,
-            c.nombre AS cliente,
-            CONVERT(VARCHAR(10), p.fecha_pedido, 120) AS fecha_pedido,
-            p.total,
-            p.estado_pedido
-        FROM pedido p
-        INNER JOIN cliente c ON p.id_cliente = c.id_cliente
-        ORDER BY p.fecha_pedido DESC
+                SELECT TOP 10
+    p.id_pedido,
+    cliente.nombre AS cliente,
+    CONVERT(VARCHAR(10), p.fecha_pedido, 120) AS fecha_pedido,
+    p.total,
+    p.estado_pedido,
+    detalle_pedido.cantidad,
+    producto.nombre AS nombre_producto
+
+FROM pedido p
+INNER JOIN cliente  ON p.id_cliente = cliente.id_cliente
+INNER JOIN detalle_pedido  ON detalle_pedido.id_pedido = p.id_pedido
+INNER JOIN producto  ON producto.id_producto = detalle_pedido.id_producto
+
+ORDER BY p.fecha_pedido DESC;
     `);
 
     return result.recordset;
@@ -174,6 +180,23 @@ async function acceptCustomRequest(id_request) {
     };
 }
 
+async function updateOrderStatus(id_order,newStatus)
+{
+    const pool = await poolPromise;
+    await pool.request()
+        .input('id_order', id_order)
+        .input('newStatus', newStatus)
+        .query(`
+            UPDATE pedido
+            SET estado_pedido = @newStatus
+            WHERE id_pedido = @id_order
+        `);
+    return{
+        success: true,
+        message: "Estado del pedido actualizado correctamente"
+    }
+}
+
 module.exports = {
     getOrders,
     getPendingShipments,
@@ -184,5 +207,6 @@ module.exports = {
     getStockProducts,
     addNewProduct,
     updateStockProducts,
-    acceptCustomRequest
+    acceptCustomRequest,
+    updateOrderStatus
 };

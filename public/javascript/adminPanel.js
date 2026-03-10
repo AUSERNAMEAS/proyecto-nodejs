@@ -73,6 +73,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!result.success) return;
 
     const data = result.data;
+    window.ordersData = data.recentOrders; // saved the data to use it later in the modals
 
     // llenar tabla pedidos
     const tableBody = document.getElementById("ordersTableBody");
@@ -100,7 +101,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     <option value="Cancelado" ${pedido.estado_pedido === "Cancelado" ? "selected" : ""}>Cancelado</option>
                 </select>
             </td>
-            <td><a href="#">Ver</a></td>
+            <td>
+          <button class="view-order-btn" data-id="${pedido.id_pedido}">
+            Ver
+          </button>
+        </td>
         </tr>
     `,
         )
@@ -256,8 +261,8 @@ loadPage();
 
     try {
       // Crearemos este nuevo archivo en el backend
-      const response = await fetch("backend/actualizarEstadoPedido.php", {
-        method: "POST",
+      const response = await fetch("http://localhost:3000/api/admin-panel/update-order-status", {
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(orderUpdates),
       });
@@ -483,5 +488,38 @@ loadPage();
       </a>
     </span>
   `;
+});
+
+//open modal to show details of the order
+document.addEventListener("click", function(e){
+
+  if(!e.target.classList.contains("view-order-btn")) return;
+
+  const orderId = e.target.getAttribute("data-id");
+// we saved the data before en the global object windos.orderData
+//to use it later and filter js the order we clicked
+  const productos = window.ordersData.filter(
+    p => p.id_pedido == orderId
+  );
+
+  const modalTitle = document.getElementById("orderTitle");
+  const list = document.getElementById("orderProducts");
+
+  modalTitle.textContent = "Detalles del Pedido #" + orderId;
+
+
+// then we build the modal
+  list.innerHTML = productos.map(p => `
+      <li>${p.nombre_producto} - Cantidad: ${p.cantidad}</li>
+  `).join("");
+
+  //shoes the modal
+  document.getElementById("orderModal").style.display = "block";
+
+});
+
+// closes detail order modal
+document.getElementById("closeOrderModal").addEventListener("click", function(){
+  document.getElementById("orderModal").style.display = "none";
 });
 });

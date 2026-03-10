@@ -151,7 +151,7 @@ async function enviarSolicitud(e) {
         imageFileName: imageFileName,
         imageBase64: imageBase64
     };
-    //console.log('Request Data:', requestData);
+    console.log('Request Data:', requestData);
 
     personalizedBtn.textContent = 'Enviando...';
     personalizedBtn.disabled = true;

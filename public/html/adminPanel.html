@@ -365,6 +365,17 @@ if ($pedidos_pendientes === 0) $pedidos_pendientes = 'N/A';
             <button id="approveBtn">Aprobar</button>
         </div>
     </div>
+
+    <!--modal to display details of the order -->
+
+    <div id="orderModal" style="display:none; position:fixed; top:20%; left:35%; background:white; padding:20px; border:1px solid black;">
+        <h3 id="orderTitle">Detalles del Pedido</h3>
+
+        <ul id="orderProducts"></ul>
+
+        <button id="closeOrderModal">Cerrar</button>
+    </div>
+    
     <script src="../javascript/adminPanel.js"></script>
     </body>
 </html>

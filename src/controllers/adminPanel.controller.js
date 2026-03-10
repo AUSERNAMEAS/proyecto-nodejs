@@ -1,4 +1,4 @@
-const {getOrders, getPendingShipments, getMonthlySales,getRecentShipments, getRecentOrders, getPendingCustomRequests, getStockProducts,addNewProduct,updateStockProducts,acceptCustomRequest} = require ('../models/adminPanel.model')
+const {getOrders, getPendingShipments, getMonthlySales,getRecentShipments, getRecentOrders, getPendingCustomRequests, getStockProducts,addNewProduct,updateStockProducts,acceptCustomRequest, updateOrderStatus} = require ('../models/adminPanel.model')
 
 async function fillDashboard(req, res)
 {
@@ -84,9 +84,34 @@ async function acceptCustomOrder(req, res)
     }
 }
 
+async function updateOrderStatusController(req, res) 
+{
+    try
+    {
+   const updates = req.body; // an array of { id_pedido, estado_pedido }
+
+    for (const update of updates) {
+        const { id_pedido, nuevo_estado} = update;
+
+        console.log("ID Pedido:", id_pedido, "Nuevo Estado:", nuevo_estado);
+
+        await updateOrderStatus(id_pedido, nuevo_estado);
+    }
+    res.json({ success: true, message: "Pedidos actualizados correctamente" });
+
+    }
+
+
+    catch(error)
+    {
+        res.status(500).json({ success: false, message: error.message });
+    }
+}
+
 module.exports = {
     fillDashboard,
     addNewProductController,
     updateStock,
-    acceptCustomOrder
+    acceptCustomOrder,
+    updateOrderStatusController
 }
