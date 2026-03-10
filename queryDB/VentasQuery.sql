@@ -150,7 +150,7 @@ foreign key (id_pedido) references pedido(id_pedido)
 
 )
 
-h
+select * from envio
 delete from envio
 
 SELECT SUM(total) AS MontoMes FROM pedido 
@@ -226,3 +226,45 @@ group by envio.id_pedido, envio.fecha_envio,
         FROM solicitud_personalizacion INNER JOIN cliente ON
         solicitud_personalizacion.id_cliente = cliente.id_cliente
         ORDER BY fecha_solicitud DESC
+
+
+        SELECT TOP 10
+            p.id_pedido,
+            c.nombre AS cliente,
+            CONVERT(VARCHAR(10), p.fecha_pedido, 120) AS fecha_pedido,
+            p.total,
+            p.estado_pedido,
+            d.cantidad,
+            (select nombre from producto INNER JOIN detalle_pedido 
+            ON producto.id_producto = detalle_pedido.id_producto
+            where detalle_pedido.id_pedido = p.id_pedido) as nombre_producto
+
+            
+        FROM pedido p
+        INNER JOIN cliente c ON p.id_cliente = c.id_cliente
+        INNER JOIN detalle_pedido d ON d.id_pedido = p.id_pedido
+        ORDER BY p.fecha_pedido DESC
+
+
+        SELECT TOP 10
+    p.id_pedido,
+    cliente.nombre AS cliente,
+    CONVERT(VARCHAR(10), p.fecha_pedido, 120) AS fecha_pedido,
+    p.total,
+    p.estado_pedido,
+    detalle_pedido.cantidad,
+    producto.nombre AS nombre_producto
+
+FROM pedido p
+INNER JOIN cliente  ON p.id_cliente = cliente.id_cliente
+INNER JOIN detalle_pedido  ON detalle_pedido.id_pedido = p.id_pedido
+INNER JOIN producto  ON producto.id_producto = detalle_pedido.id_producto
+
+ORDER BY p.fecha_pedido DESC;
+
+select envio.id_pedido,fecha_envio,SUM(subtotal) as suma_total,estado_pedido
+    from envio INNER JOIN detalle_pedido ON
+    detalle_pedido.id_pedido = envio.id_pedido
+    INNER JOIN pedido ON pedido.id_pedido = envio.id_pedido
+    group by envio.id_pedido, envio.fecha_envio,
+    pedido.estado_pedido;
