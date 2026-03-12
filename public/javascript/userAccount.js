@@ -54,9 +54,7 @@ async function loadOrders()
                 <p><strong>Pedido #${order.id_pedido}</strong></p>
                 <p>Fecha: ${new Date(order.fecha_envio).toLocaleDateString()}</p>
                 <p>Total: $${order.suma_total}</p>
-                <p>Estado: ${order.estado_pedido               
-                 
-            }</p>
+                <p>Estado: ${order.estado_pedido}</p>
 
                  <div class="order-button">
                     <button class="btn-show-details">Ver detalles</button>

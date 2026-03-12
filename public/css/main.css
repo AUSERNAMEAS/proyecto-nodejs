@@ -66,6 +66,8 @@ h2 {
     padding: 1rem;
     text-align: center;
     background-color: #f8f8ff; /* Blanco azulado */
+    cursor: pointer; /* hace evidente que se puede clickear */
+    transition: transform 0.2s, box-shadow 0.2s;
 }
 .product-card img {
     max-width: 100%;
@@ -244,4 +246,9 @@ h2 {
     padding: 1rem;
     border-radius: 6px;
     background-color: #f8f8ff;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 14px rgba(0,0,0,0.15);
 }

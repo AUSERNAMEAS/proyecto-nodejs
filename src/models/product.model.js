@@ -17,6 +17,27 @@ async function getAllProducts()
         //we use recordser to get the array of results
     return result.recordset;
 }
+
+async function getProductById(id) {
+    const pool = await poolPromise;
+
+    const result = await pool.request()
+        .input('id', id)
+        .query(`
+            SELECT 
+                id_producto,
+                nombre,
+                precio_unitario,
+                imagen,
+                categoria,
+                descripcion
+            FROM producto
+            WHERE id_producto = @id
+        `);
+
+    return result.recordset[0];
+}
 module.exports = {
-    getAllProducts
+    getAllProducts,
+    getProductById
 };

@@ -17,6 +17,11 @@ let productsShown = 3;
 /**
  * Renderiza los productos con selector de tallas
  */
+
+function goToProduct(id){
+    window.location.href = `../html/product.html?id=${id}`;
+} 
+
 function renderProducts() {
     if (!productGrid) {
         console.error('No se encontró el contenedor #product-grid');
@@ -29,7 +34,9 @@ function renderProducts() {
             const productCard = document.createElement('div');
             let sizeHTML = ``;
             productCard.className = 'product-card';
-            if(product.categoria === 'prenda')
+            productCard.onclick = () => goToProduct(product.id_producto);
+
+            if(product.categoria === 'camisa' || product.categoria === 'sueter')
             {
                 sizeHTML = `
                 <div style="margin-bottom:10px;">
@@ -49,7 +56,7 @@ function renderProducts() {
                 <p>$${product.precio_unitario.toFixed(2)} MXN</p>
                 ${sizeHTML}
 
-                <button onclick="prepararCompra(${product.id_producto})">Agregar al Carrito</button>
+                <button onclick=" event.stopPropagation(); prepararCompra(${product.id_producto})">Agregar al Carrito</button>
 
                 
             `;

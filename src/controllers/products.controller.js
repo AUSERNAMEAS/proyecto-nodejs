@@ -15,4 +15,24 @@ async function getProducts(req, res)
   }
 };
 
-module.exports = {getProducts};
+async function getProductById(req, res) {
+  try {
+
+    const id = req.params.id;
+
+    const product = await productModel.getProductById(id);
+
+    if (!product) {
+        return res.status(404).json({message:"Producto no encontrado"});
+    }
+
+    res.json(product);
+
+  } catch (error) {
+
+    res.status(500).json({error:error.message});
+
+  }
+}
+
+module.exports = {getProducts, getProductById};

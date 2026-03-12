@@ -5,5 +5,6 @@ const productController = require('../controllers/products.controller');
 //now we using controller to do the lofic part there and here just call the controller function
 
 router.get('/',productController.getProducts);
+router.get('/:id', productController.getProductById);
 
 module.exports = router;
