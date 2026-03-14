@@ -127,6 +127,7 @@ document.addEventListener("DOMContentLoaded", () => {
         .map((solicitud) => {
 
         if (solicitud.estado === "Aceptada") {
+          //console.log("Solicitud ya aceptada:", solicitud);
 
           return `
           <li
@@ -139,12 +140,12 @@ document.addEventListener("DOMContentLoaded", () => {
             ${solicitud.tipo_producto}:
             ${solicitud.instrucciones}
 
-            <button class="view-custom-btn" data-id="${solicitud.id_solicitud}" data-status="${solicitud.estado}">
+            <button class="view-custom-btn approved" data-id="${solicitud.id_solicitud}" data-status="${solicitud.estado}">
               Aprobado
             </button>
 
             <span style="margin-left:10px;">
-              <a href="mailto:${solicitud.correo}" target="_blank">
+              <a href="https://mail.google.com/mail/?view=cm&to=${solicitud.correo}" target="_blank">
                 <img src="https://cdn-icons-png.flaticon.com/512/732/732200.png" width="20">
               </a>
 
@@ -351,6 +352,8 @@ loadPage();
       imagen: document.getElementById("new-image").value,
       peso_kg: document.getElementById("new-weight").value,
     };
+
+    
 
     btnAddProduct.textContent = "Añadiendo...";
     btnAddProduct.disabled = true;

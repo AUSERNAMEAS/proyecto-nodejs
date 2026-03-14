@@ -223,3 +223,260 @@
   font-size: 22px;
   cursor: pointer;
 }
+
+/* TABLA DE STOCK */
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:1rem;
+background:white;
+border-radius:10px;
+overflow:hidden;
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
+font-size:0.95rem;
+}
+
+/* encabezado */
+
+thead{
+background:#8a2be2;
+color:white;
+}
+
+thead th{
+padding:0.8rem;
+text-align:center;
+font-weight:bold;
+}
+
+/* celdas */
+
+tbody td{
+padding:0.7rem;
+text-align:center;
+border-bottom:1px solid #eee;
+}
+
+/* filas alternadas */
+
+tbody tr:nth-child(even){
+background:#f7f4ff;
+}
+
+/* hover */
+
+tbody tr:hover{
+background:#e9ddff;
+transition:0.2s;
+}
+
+/* columna stock */
+
+.stock-value{
+font-weight:bold;
+color:#6a0dad;
+}
+
+/* BOTONES */
+
+.stock-btn{
+background:#8a2be2;
+color:white;
+border:none;
+padding:0.3rem 0.7rem;
+border-radius:6px;
+cursor:pointer;
+font-weight:bold;
+margin:0 3px;
+transition:0.2s;
+}
+
+.stock-btn:hover{
+background:#a050f0;
+}
+
+/* botón disminuir */
+
+.decrease-stock{
+background:#d9534f;
+}
+
+.decrease-stock:hover{
+background:#c9302c;
+}
+
+/* botón aumentar */
+
+.increase-stock{
+background:#5cb85c;
+}
+
+.increase-stock:hover{
+background:#4cae4c;
+}
+
+.save-stock-btn{
+background:#28a745;
+color:white;
+border:none;
+padding:0.6rem 1.2rem;
+border-radius:8px;
+font-size:0.95rem;
+font-weight:bold;
+cursor:pointer;
+transition:all 0.2s ease;
+box-shadow:0 3px 6px rgba(0,0,0,0.15);
+}
+
+/* hover */
+
+.save-stock-btn:hover{
+background:#218838;
+transform:translateY(-1px);
+box-shadow:0 5px 10px rgba(0,0,0,0.2);
+}
+
+/* click */
+
+.save-stock-btn:active{
+transform:translateY(0);
+box-shadow:0 2px 4px rgba(0,0,0,0.15);
+}
+
+/* botón para ver */
+
+.view-custom-btn{
+background:#0d6efd;
+color:white;
+border:none;
+padding:0.5rem 1rem;
+border-radius:6px;
+cursor:pointer;
+font-weight:bold;
+transition:0.2s;
+}
+
+.view-custom-btn:hover{
+background:#0b5ed7;
+}
+
+/* botón para aprobar */
+
+.approve-btn{
+background:#28a745;
+color:white;
+border:none;
+padding:0.5rem 1rem;
+border-radius:6px;
+cursor:pointer;
+font-weight:bold;
+transition:0.2s;
+}
+
+.approve-btn:hover{
+background:#218838;
+}
+
+/* cuando ya está aprobado */
+
+.view-custom-btn.approved{
+background:#28a745;
+}
+
+.view-custom-btn.approved:hover{
+background:#218838;
+}
+.order-status-select{
+background:#f9f9ff;
+border:1px solid #d0d0f0;
+border-radius:6px;
+padding:0.4rem 0.7rem;
+font-weight:bold;
+color:#333;
+}
+
+/* hover */
+
+.order-status-select:hover{
+border-color:#8a2be2;
+}
+
+/* cuando está enfocado */
+
+.order-status-select:focus{
+outline:none;
+border-color:#8a2be2;
+box-shadow:0 0 4px rgba(138,43,226,0.4);
+}
+.view-order-btn{
+background:#0d6efd;
+color:white;
+border:none;
+padding:0.35rem 0.8rem;
+font-size:0.85rem;
+border-radius:5px;
+cursor:pointer;
+font-weight:500;
+transition:background 0.2s ease, transform 0.1s ease;
+}
+
+.view-order-btn:hover{
+background:#0b5ed7;
+}
+
+.view-order-btn:active{
+transform:scale(0.96);
+}
+
+.btn-product-action{
+background:#28a745;
+color:white;
+border:none;
+padding:0.6rem 1.2rem;
+border-radius:6px;
+cursor:pointer;
+font-weight:500;
+font-size:0.9rem;
+margin-top:1rem;
+transition:background 0.2s ease, transform 0.1s ease;
+}
+
+.btn-product-action:hover{
+background:#218838;
+}
+
+.btn-product-action:active{
+transform:scale(0.97);
+}
+
+#new-category{
+width:100%;
+padding:0.45rem 0.6rem;
+border:1px solid #ccc;
+border-radius:6px;
+font-size:0.9rem;
+background:white;
+cursor:pointer;
+transition:all 0.2s ease;
+}
+
+/* hover */
+
+#new-category:hover{
+border-color:#8a2be2;
+}
+
+/* focus */
+
+#new-category:focus{
+outline:none;
+border-color:#8a2be2;
+box-shadow:0 0 4px rgba(138,43,226,0.35);
+}
+
+/* opción deshabilitada */
+
+#new-category option:disabled{
+color:#888;
+}

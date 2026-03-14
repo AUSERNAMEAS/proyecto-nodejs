@@ -3,19 +3,21 @@ MAIN PAGE
 
 
 
-1. add more details when u click a product
+1. add more details when u click a product---------------------
 2. add sql transaction when u create a new order
 3. add paypal and card methods
 4. basic security
 5. pageUser add functionality button verDetalles
+6. add the customRequest to pageUser
 
 ADMIN PANEL
 
 6. only show one order in the order table
 7. fix custom request image with t shirt
-8. fix gmail error
+8. fix gmail error-----------------------
 9. implement stock limitation in the main page
 10. add path url when u add a new product
+11. add verification and security to the panel
 
 
 things that i learned/shouldve known

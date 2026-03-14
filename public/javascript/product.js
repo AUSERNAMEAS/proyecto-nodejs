@@ -118,6 +118,11 @@ async function loadProduct(){
     else if(currentProduct.categoria === "freebe"){
         detailsTypeProduct = `Pequeño accesorio  Ideal para complementar tu pedido o añadir un toque especial. Ligero, práctico y perfecto como regalo o recuerdo. Disponible en diferentes estilos según el producto seleccionado.`
     }
+
+    else if(currentProduct.categoria === "frazada"){
+        detailsTypeProduct = `
+        Frazada suave elaborada con algodón de alta calidad, ideal para brindar comodidad y abrigo ligero. Con medidas de 1.10 m de ancho por 1.60 m de largo, es perfecta para usar en casa, viajes o como manta personal para descansar con mayor confort.        `
+    }
     
     document.getElementById("product-name").textContent = currentProduct.nombre;
 

@@ -81,6 +81,22 @@ VALUES
 
 ('Sudadera Jimin Tattoo', 'Prenda de vestir de colección.', 5, 'prenda', '0.7kg', 'Activo', 400.00, 'img/products/sudaderablanca2.jpg');
 
+UPDATE producto
+SET categoria =
+CASE
+    WHEN nombre IN ('Camisa Golden','Camisa Indigo') THEN 'camisa'
+    WHEN nombre IN (
+        'Suéter Navideño BTS',
+        'Sudadera Jungkook Tattoo',
+        'Sudadera Jimin Tattoo'
+    ) THEN 'sueter'
+    ELSE categoria
+END;
+
+update producto set categoria = 'taza' where id_producto = 11
+update producto set categoria = 'termo' where id_producto = 7
+
+
 
 select id_producto,nombre,precio_unitario,imagen from producto
 
