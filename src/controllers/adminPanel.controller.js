@@ -34,8 +34,16 @@ async function fillDashboard(req, res)
 async function addNewProductController(req, res) {
     try 
     {
-        const { nombre, descripcion, stock, categoria, peso_kg, estado_producto, precio, imagen } = req.body;
-        const result = await addNewProduct(nombre, descripcion, stock, categoria, peso_kg, estado_producto, precio, imagen);
+        if (!req.file) {
+        return res.status(400).json({
+            success:false,
+            message:"No se subió ninguna imagen"
+        });
+}
+
+        const { nombre, descripcion, stock, categoria, peso_kg, precio } = req.body;
+        const imagePath = "img/products/" + req.file.filename;
+        const result = await addNewProduct(nombre, descripcion, stock, categoria, peso_kg, precio, imagePath);
         res.json({ success: true, message: "Producto agregado exitosamente", affectedRows: result });
     }
     catch (error) {

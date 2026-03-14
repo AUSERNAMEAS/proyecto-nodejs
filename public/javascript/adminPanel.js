@@ -343,17 +343,19 @@ loadPage();
     }
 
     // 2.get all the data we need
-    const newProductData = {
-      nombre: document.getElementById("new-name").value,
-      precio: document.getElementById("new-price").value,
-      stock: document.getElementById("new-stock").value,
-      categoria: document.getElementById("new-category").value,
-      descripcion: document.getElementById("new-description").value,
-      imagen: document.getElementById("new-image").value,
-      peso_kg: document.getElementById("new-weight").value,
-    };
+    //We use formData to handle th file upload bruh
+      const formData = new FormData();
 
-    
+    formData.append("nombre", document.getElementById("new-name").value);
+    formData.append("precio", document.getElementById("new-price").value);
+    formData.append("stock", document.getElementById("new-stock").value);
+    formData.append("categoria", document.getElementById("new-category").value);
+    formData.append("descripcion", document.getElementById("new-description").value);
+    formData.append("peso_kg", document.getElementById("new-weight").value);
+
+    const file = document.getElementById("new-image").files[0];
+    formData.append("imagen", file);
+
 
     btnAddProduct.textContent = "Añadiendo...";
     btnAddProduct.disabled = true;
@@ -362,10 +364,7 @@ loadPage();
     try {
       const response = await fetch("http://localhost:3000/api/admin-panel/add-product", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json", // Indicamos que enviamos JSON
-        },
-        body: JSON.stringify(newProductData), // Convertimos el objeto a JSON
+        body:formData 
       });
 
       const result = await response.json();

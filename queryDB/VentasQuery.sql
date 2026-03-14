@@ -55,6 +55,10 @@ alter table producto add precio_unitario money
 ALTER TABLE producto ADD imagen VARCHAR(100);
 
 select * from producto
+SELECT IDENT_CURRENT('producto')
+SELECT MAX(id_producto) FROM producto
+
+
 DELETE FROM producto
 
 -- INSERT INTO: Consulta para insertar los 10 productos con todos los campos.
@@ -95,6 +99,8 @@ END;
 
 update producto set categoria = 'taza' where id_producto = 11
 update producto set categoria = 'termo' where id_producto = 7
+update producto set categoria = 'frazada' where id_producto = 8
+
 
 
 

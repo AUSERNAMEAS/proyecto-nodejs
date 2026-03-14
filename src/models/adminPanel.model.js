@@ -114,7 +114,7 @@ async function getStockProducts(){
     return result.recordset;
 }
 
-async function addNewProduct(nombre, descripcion, stock, categoria, peso_kg, estado_producto, precio, imagen) {
+async function addNewProduct(nombre, descripcion, stock, categoria, peso_kg, precio, imagenPath) {
     const pool = await poolPromise;
     const result = await pool.request().
     input('nombre', nombre).
@@ -122,13 +122,12 @@ async function addNewProduct(nombre, descripcion, stock, categoria, peso_kg, est
     input('stock', parseInt(stock)).
     input('categoria', categoria).
     input('peso_kg', parseFloat(peso_kg)).
-    input('estado_producto', estado_producto).
     input('precio', parseFloat(precio)).
-    input('imagen', imagen)
+    input('imagen', imagenPath)
     .query(`
       INSERT INTO producto
       (nombre, descripcion, stock, categoria, peso_kg, estado_producto, precio_unitario, imagen)
-      VALUES (@nombre, @descripcion, @stock, @categoria, @peso_kg, @estado_producto, @precio, @imagen)
+      VALUES (@nombre, @descripcion, @stock, @categoria, @peso_kg, 'Activo', @precio, @imagen)
     `);
 
     return result.rowsAffected[0] > 0; // returns true if a row was inserted

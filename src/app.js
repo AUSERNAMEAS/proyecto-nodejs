@@ -4,6 +4,7 @@ const app = express();
 const session = require('express-session'); //importing express-session to simulate user sessions
 
 
+
 app.use(express.json()); // this uses middleware to parse JSON bodies
 app.use(session({
   secret: process.env.SESSION_SECRET || 'secretoo',// secret key for signing the session ID cookie,
